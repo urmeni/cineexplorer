@@ -1,27 +1,28 @@
 import sqlite3
 import os
 
-# On récupère le chemin absolu du script actuel
+# --- CONFIGURATION CHEMINS (Identique) ---
 current_script_path = os.path.abspath(__file__)
-
-# On remonte l'arborescence pour trouver la racine 'cineexplorer'
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(current_script_path)))
 DATA_DIR = os.path.join(BASE_DIR, 'data')
-DB_PATH = os.path.join(DATA_DIR, 'imdb.db')
+DB_PATH = os.path.join(DATA_DIR, 'imdb-full.db')
+
+if not os.path.exists(DATA_DIR):
+    os.makedirs(DATA_DIR)
+
 
 def create_schema():
-    print(f"Création de la base de données dans : {DB_PATH}")
+    print(f"🚀 Création du schéma dans : {DB_PATH}")
 
-    # Connexion (crée le fichier s'il n'existe pas)
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
-
-    # Activation des clés étrangères (important pour SQLite)
-    cursor.execute("PRAGMA foreign_keys = ON;")
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        cursor.execute("PRAGMA foreign_keys = ON;")
+    except sqlite3.OperationalError as e:
+        print(f"❌ Erreur : {e}")
+        return
 
     # --- 1. Tables Principales ---
-
-    # Table MOVIES
     cursor.execute("""
                    CREATE TABLE IF NOT EXISTS movies
                    (
@@ -42,7 +43,6 @@ def create_schema():
                    );
                    """)
 
-    # Table PERSONS
     cursor.execute("""
                    CREATE TABLE IF NOT EXISTS persons
                    (
@@ -59,9 +59,7 @@ def create_schema():
                    );
                    """)
 
-    # --- 2. Tables "One-to-One" ou Extension ---
-
-    # Table RATINGS (Liée à Movies)
+    # --- 2. Tables Extensions ---
     cursor.execute("""
                    CREATE TABLE IF NOT EXISTS ratings
                    (
@@ -84,9 +82,6 @@ def create_schema():
                        );
                    """)
 
-    # --- 3. Tables de Détails (Weak Entities) ---
-
-    # Table TITLES (Titres alternatifs)
     cursor.execute("""
                    CREATE TABLE IF NOT EXISTS titles
                    (
@@ -118,7 +113,6 @@ def create_schema():
                        );
                    """)
 
-    # Table GENRES (Multivaluée)
     cursor.execute("""
                    CREATE TABLE IF NOT EXISTS genres
                    (
@@ -142,9 +136,64 @@ def create_schema():
                        );
                    """)
 
-    # --- 4. Tables d'Association (Many-to-Many) ---
+    # --- 3. NOUVELLES TABLES ---
 
-    # Table DIRECTORS
+    # Table PROFESSIONS (pid, jobName)
+    cursor.execute("""
+                   CREATE TABLE IF NOT EXISTS professions
+                   (
+                       pid
+                       TEXT,
+                       jobName
+                       TEXT,
+                       PRIMARY
+                       KEY
+                   (
+                       pid,
+                       jobName
+                   ),
+                       FOREIGN KEY
+                   (
+                       pid
+                   ) REFERENCES persons
+                   (
+                       pid
+                   )
+                       );
+                   """)
+
+    # Table KNOWN_FOR (pid, mid) - Films pour lesquels la personne est connue
+    cursor.execute("""
+                   CREATE TABLE IF NOT EXISTS known_for
+                   (
+                       pid
+                       TEXT,
+                       mid
+                       TEXT,
+                       PRIMARY
+                       KEY
+                   (
+                       pid,
+                       mid
+                   ),
+                       FOREIGN KEY
+                   (
+                       pid
+                   ) REFERENCES persons
+                   (
+                       pid
+                   ),
+                       FOREIGN KEY
+                   (
+                       mid
+                   ) REFERENCES movies
+                   (
+                       mid
+                   )
+                       );
+                   """)
+
+    # --- 4. Tables d'Association ---
     cursor.execute("""
                    CREATE TABLE IF NOT EXISTS directors
                    (
@@ -175,7 +224,6 @@ def create_schema():
                        );
                    """)
 
-    # Table WRITERS
     cursor.execute("""
                    CREATE TABLE IF NOT EXISTS writers
                    (
@@ -206,7 +254,6 @@ def create_schema():
                        );
                    """)
 
-    # Table PRINCIPALS (Casting principal avec ordre)
     cursor.execute("""
                    CREATE TABLE IF NOT EXISTS principals
                    (
@@ -243,9 +290,6 @@ def create_schema():
                        );
                    """)
 
-    # Table CHARACTERS (Personnages joués)
-    # Note : Le CSV characters ne semble pas avoir d'ordering unique,
-    # donc la PK est composite sur (mid, pid, name) pour éviter les doublons stricts
     cursor.execute("""
                    CREATE TABLE IF NOT EXISTS characters
                    (
@@ -272,11 +316,13 @@ def create_schema():
                    )
                        );
                    """)
-    # Index optionnel pour accélérer les recherches de personnages
     cursor.execute("CREATE INDEX IF NOT EXISTS idx_chars_mid ON characters(mid);")
 
-    print("Schéma créé avec succès.")
+    # Index utiles pour les nouvelles tables
+    cursor.execute("CREATE INDEX IF NOT EXISTS idx_professions_pid ON professions(pid);")
+    cursor.execute("CREATE INDEX IF NOT EXISTS idx_knownfor_pid ON known_for(pid);")
 
+    print("✅ Schéma mis à jour avec succès (inclus professions & known_for).")
     conn.commit()
     conn.close()
 

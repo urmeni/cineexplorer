@@ -6,22 +6,23 @@ import time
 # --- CONFIGURATION DES CHEMINS ---
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DATA_DIR = os.path.join(BASE_DIR, 'data')
-CSV_DIR = os.path.join(DATA_DIR, 'csv/imdb-small/')
-DB_PATH = os.path.join(DATA_DIR, 'imdb.db')
+CSV_DIR = os.path.join(DATA_DIR, 'csv/imdb-full/')
+DB_PATH = os.path.join(DATA_DIR, 'imdb-full.db')
 
 # --- CONFIGURATION DE L'IMPORT ---
 IMPORT_CONFIG = [
+    # 1. ENTITÉS PRINCIPALES
     {
         'csv': 'movies.csv',
         'table': 'movies',
-        'cols': ["('mid',)", "('primaryTitle',)", "('originalTitle',)", "('isAdult',)", "('startYear',)",
-                 "('runtimeMinutes',)"]
+        'cols': ["('mid',)", "('primaryTitle',)", "('originalTitle',)", "('isAdult',)", "('startYear',)", "('runtimeMinutes',)"]
     },
     {
         'csv': 'persons.csv',
         'table': 'persons',
         'cols': ["('pid',)", "('primaryName',)", "('birthYear',)", "('deathYear',)"]
     },
+    # 2. ENTITÉS SECONDAIRES
     {
         'csv': 'ratings.csv',
         'table': 'ratings',
@@ -37,6 +38,18 @@ IMPORT_CONFIG = [
         'table': 'titles',
         'cols': ["('mid',)", "('ordering',)", "('title',)", "('region',)", "('language',)", "('isOriginalTitle',)"]
     },
+    # 3. NOUVEAUX FICHIERS
+    {
+        'csv': 'professions.csv',
+        'table': 'professions',
+        'cols': ["('pid',)", "('jobName',)"]
+    },
+    {
+        'csv': 'knownformovies.csv',
+        'table': 'known_for',
+        'cols': ["('pid',)", "('mid',)"]
+    },
+    # 4. ASSOCIATIONS
     {
         'csv': 'directors.csv',
         'table': 'directors',

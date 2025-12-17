@@ -5,7 +5,7 @@ import queries  # Importe tes fonctions définies précédemment
 
 # --- CONFIGURATION ---
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-DB_PATH = os.path.join(BASE_DIR, 'data', 'imdb.db')
+DB_PATH = os.path.join(BASE_DIR, 'data', 'imdb-full.db')
 
 
 def get_db_size():
@@ -29,7 +29,7 @@ def drop_indexes(conn):
 
 def create_indexes(conn):
     """Crée les index stratégiques"""
-    print("\n🔨 Création des index en cours...")
+    print("\n Création des index en cours...")
     start = time.time()
 
     # 1. Index sur les noms (Recherche textuelle - Q1, Q4, Q6, Q8)
@@ -86,7 +86,7 @@ def run_benchmark():
     create_indexes(conn)
     print(f" Taille DB après index : {get_db_size():.2f} Mo")
 
-    print("\n⏱️  Mesure des temps AVEC index...")
+    print("\n⏱  Mesure des temps AVEC index...")
     for name, func, args in tests:
         start = time.time()
         func(conn, *args)
@@ -109,6 +109,9 @@ def run_benchmark():
         print(f"{name:<25} | {t1:15.2f} | {t2:15.2f} | {gain:9.1f}%")
     print("=" * 85)
 
+
+    # affiche moi hello world
+    print("\nHello World")
 
 if __name__ == "__main__":
     run_benchmark()
