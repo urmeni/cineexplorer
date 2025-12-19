@@ -5,7 +5,7 @@ import os
 current_script_path = os.path.abspath(__file__)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(current_script_path)))
 DATA_DIR = os.path.join(BASE_DIR, 'data')
-DB_PATH = os.path.join(DATA_DIR, 'imdb-full.db')
+DB_PATH = os.path.join(DATA_DIR, 'imdb-tiny.db')
 
 if not os.path.exists(DATA_DIR):
     os.makedirs(DATA_DIR)

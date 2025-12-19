@@ -10,7 +10,7 @@ DB_NAME = "imdb_project"  # Nom de la base MongoDB
 
 # Chemins
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-SQLITE_DB_PATH = os.path.join(BASE_DIR, 'data', 'imdb.db')
+SQLITE_DB_PATH = os.path.join(BASE_DIR, 'data', 'imdb-tiny.db')
 
 
 def migrate_flat():

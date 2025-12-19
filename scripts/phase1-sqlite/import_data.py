@@ -6,8 +6,8 @@ import time
 # --- CONFIGURATION DES CHEMINS ---
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DATA_DIR = os.path.join(BASE_DIR, 'data')
-CSV_DIR = os.path.join(DATA_DIR, 'csv/imdb-full/')
-DB_PATH = os.path.join(DATA_DIR, 'imdb-full.db')
+CSV_DIR = os.path.join(DATA_DIR, 'csv/imdb-tiny/')
+DB_PATH = os.path.join(DATA_DIR, 'imdb-tiny.db')
 
 # --- CONFIGURATION DE L'IMPORT ---
 IMPORT_CONFIG = [
