@@ -1,0 +1,88 @@
+{% extends 'movies/base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-center mb-5">📊 Analyse du Catalogue</h1>
+
+    <div class="row mb-5">
+        <div class="col-md-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-header fw-bold">Top 10 Genres</div>
+                <div class="card-body">
+                    <canvas id="genresChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-header fw-bold">Distribution des Notes</div>
+                <div class="card-body">
+                    <canvas id="ratingsChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header fw-bold">Films par Décennie</div>
+                <div class="card-body">
+                    <canvas id="decadesChart" height="100"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Configuration commune
+    const commonOptions = { responsive: true, plugins: { legend: { display: false } } };
+
+    // 1. Chart Genres (Barres Horizontales)
+    new Chart(document.getElementById('genresChart'), {
+        type: 'bar',
+        data: {
+            labels: {{ genres_labels|safe }},
+            datasets: [{
+                label: 'Nombre de films',
+                data: {{ genres_data|safe }},
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                indexAxis: 'y'
+            }]
+        }
+    });
+
+    // 2. Chart Notes (Barres Verticales)
+    new Chart(document.getElementById('ratingsChart'), {
+        type: 'bar',
+        data: {
+            labels: {{ ratings_labels|safe }},
+            datasets: [{
+                label: 'Films',
+                data: {{ ratings_data|safe }},
+                backgroundColor: 'rgba(255, 206, 86, 0.6)'
+            }]
+        }
+    });
+
+    // 3. Chart Décennies (Ligne)
+    new Chart(document.getElementById('decadesChart'), {
+        type: 'line',
+        data: {
+            labels: {{ decades_labels|safe }},
+            datasets: [{
+                label: 'Production cinématographique',
+                data: {{ decades_data|safe }},
+                borderColor: 'rgba(75, 192, 192, 1)',
+                fill: true,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)'
+            }]
+        },
+        options: commonOptions
+    });
+</script>
+{% endblock %}

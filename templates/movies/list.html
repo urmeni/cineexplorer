@@ -1,0 +1,89 @@
+{% extends 'movies/base.html' %}
+
+{% block content %}
+<div class="container my-4">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card shadow-sm p-3 mb-4">
+                <h5 class="mb-3">Filtrer</h5>
+                <form method="get">
+                    <div class="mb-3">
+                        <label class="form-label">Genre</label>
+                        <select name="genre" class="form-select">
+                            <option value="">Tous</option>
+                            {% for g in genres %}
+                            <option value="{{ g }}" {% if selected_genre == g %}selected{% endif %}>{{ g }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Année min</label>
+                        <input type="number" name="year_min" class="form-control" value="{{ selected_year }}" placeholder="ex: 1990">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Note min</label>
+                        <input type="number" step="0.1" name="rating_min" class="form-control" value="{{ selected_rating }}" placeholder="ex: 7.5">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Trier par</label>
+                        <select name="sort" class="form-select">
+                            <option value="year_desc" {% if selected_sort == 'year_desc' %}selected{% endif %}>Plus récents</option>
+                            <option value="year_asc" {% if selected_sort == 'year_asc' %}selected{% endif %}>Plus anciens</option>
+                            <option value="rating_desc" {% if selected_sort == 'rating_desc' %}selected{% endif %}>Meilleures notes</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Appliquer</button>
+                    <a href="{% url 'movie_list' %}" class="btn btn-outline-secondary w-100 mt-2">Réinitialiser</a>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4>{{ total_count }} films trouvés</h4>
+                <span>Page {{ current_page }} / {{ total_pages }}</span>
+            </div>
+
+            <div class="list-group">
+                {% for movie in movies %}
+                <a href="{% url 'movie_detail' movie.id %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="mb-1">{{ movie.title }} <small class="text-muted">({{ movie.year }})</small></h5>
+                        <div class="mb-1">
+                            {% for genre in movie.genres %}
+                                <span class="badge bg-light text-dark border">{{ genre }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <span class="badge bg-warning text-dark fs-6">{{ movie.rating.average|default:"-" }} / 10</span>
+                        <br>
+                        <small class="text-muted">{{ movie.runtime|default:"?" }} min</small>
+                    </div>
+                </a>
+                {% empty %}
+                <div class="alert alert-info">Aucun film ne correspond à vos critères.</div>
+                {% endfor %}
+            </div>
+
+            <nav class="mt-4">
+                <ul class="pagination justify-content-center">
+                    {% if current_page > 1 %}
+                    <li class="page-item"><a class="page-link" href="?page={{ current_page|add:-1 }}&genre={{ selected_genre }}&sort={{ selected_sort }}">Précédent</a></li>
+                    {% endif %}
+
+                    {% for p in page_range %}
+                    <li class="page-item {% if p == current_page %}active{% endif %}">
+                        <a class="page-link" href="?page={{ p }}&genre={{ selected_genre }}&sort={{ selected_sort }}">{{ p }}</a>
+                    </li>
+                    {% endfor %}
+
+                    {% if current_page < total_pages %}
+                    <li class="page-item"><a class="page-link" href="?page={{ current_page|add:1 }}&genre={{ selected_genre }}&sort={{ selected_sort }}">Suivant</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+{% endblock %}
