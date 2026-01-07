@@ -1,19 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="aa033ef2-0e19-4508-9606-1820e264e488" name="Changes" comment="phase 2 final">
-      <change afterPath="$PROJECT_DIR$/movies/services/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/movies/services/mongo_service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/movies/services/sqlite_service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/phase3-replica/init_replica.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/phase3-replica/test_failover.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/stats.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reports/rapport BDA Phase 2" beforeDir="false" afterPath="$PROJECT_DIR$/reports/livrable-2/rapport BDA Phase 2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/phase2-mongodb/compare_performance.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/phase2-mongodb/compare_performance.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/phase2-mongodb/migrate_flat.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/phase2-mongodb/migrate_flat.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/phase2-mongodb/migrate_structured.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/phase2-mongodb/migrate_structured.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/phase2-mongodb/test_connection.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/phase2-mongodb/test_connection.py" afterDir="false" />
+    <list default="true" id="aa033ef2-0e19-4508-9606-1820e264e488" name="Changes" comment="phase 3">
+      <change afterPath="$PROJECT_DIR$/reports/livrable-3/Rapport Phase3 Replica set.pdf" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,7 +102,7 @@
       <workItem from="1765960467488" duration="4830000" />
       <workItem from="1766045652795" duration="19000" />
       <workItem from="1766156903266" duration="2277000" />
-      <workItem from="1767807658800" duration="4573000" />
+      <workItem from="1767807658800" duration="4996000" />
     </task>
     <task id="LOCAL-00001" summary="phase 1 final">
       <option name="closed" value="true" />
@@ -139,7 +128,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766159174147</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="phase 3">
+      <option name="closed" value="true" />
+      <created>1767812494081</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1767812494081</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -149,7 +146,8 @@
     <MESSAGE value="phase 1 final" />
     <MESSAGE value="phase 2 first" />
     <MESSAGE value="phase 2 final" />
-    <option name="LAST_COMMIT_MESSAGE" value="phase 2 final" />
+    <MESSAGE value="phase 3" />
+    <option name="LAST_COMMIT_MESSAGE" value="phase 3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/cineexplorer$create_schema.coverage" NAME="create_schema Coverage Results" MODIFIED="1766157960111" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/scripts/phase1-sqlite" />
