@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Architecture BDA</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .box { border: 1px solid #ccc; padding: 15px; margin-bottom: 20px; border-radius: 5px; }
+        .success { color: green; font-weight: bold; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>🛠️ Test Architecture Hybride (Phase 3)</h1>
+
+    <div class="box">
+        <h2>🐘 SQLite (Relationnel)</h2>
+        <p>État : <span class="{{ sqlite.status|cut:'❌'|yesno:'success,error' }}">{{ sqlite.status }}</span></p>
+        <ul>
+            <li>Films (Table movies) : {{ sqlite.movies_count }}</li>
+            <li>Personnes (Table persons) : {{ sqlite.persons_count }}</li>
+            <li>Fichier : {{ sqlite.path }}</li>
+        </ul>
+    </div>
+
+    <div class="box">
+        <h2>🍃 MongoDB (NoSQL Distribué)</h2>
+        <p>État : <span class="{{ mongo.status|cut:'❌'|yesno:'success,error' }}">{{ mongo.status }}</span></p>
+        <ul>
+            <li>Films (Collection movies_complete) : {{ mongo.movies_count }}</li>
+            <li>Nœuds détectés : {{ mongo.nodes }}</li>
+        </ul>
+    </div>
+</body>
+</html>

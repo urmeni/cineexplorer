@@ -16,7 +16,7 @@ SQLITE_DB_PATH = os.path.join(BASE_DIR, 'data', 'imdb-tiny.db')
 def migrate_flat():
     # 1. Connexion SQLite
     if not os.path.exists(SQLITE_DB_PATH):
-        print(f"❌ Erreur : Base SQLite introuvable à {SQLITE_DB_PATH}")
+        print(f"Erreur : Base SQLite introuvable à {SQLITE_DB_PATH}")
         return
 
     print(f"🔌 Connexion à SQLite ({SQLITE_DB_PATH})...")
@@ -34,7 +34,7 @@ def migrate_flat():
     cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
     tables = [row['name'] for row in cursor.fetchall() if row['name'] != 'sqlite_sequence']
 
-    print(f"\n🚀 Démarrage de la migration de {len(tables)} tables vers des collections plates...")
+    print(f"\nDémarrage de la migration de {len(tables)} tables vers des collections plates...")
     start_global = time.time()
 
     stats = []
@@ -50,7 +50,7 @@ def migrate_flat():
         total_rows = count_cursor.fetchone()[0]
 
         if total_rows == 0:
-            print("   ⚠️ Table vide, ignorée.")
+            print("   Table vide, ignorée.")
             continue
 
         # C. Migration par lots (Batch)
@@ -82,7 +82,7 @@ def migrate_flat():
         # D. Vérification (Comptage MongoDB)
         mongo_count = db_mongo[table].count_documents({})
 
-        status = "✅ OK" if mongo_count == total_rows else "❌ ÉCART"
+        status = "OK" if mongo_count == total_rows else "❌ ÉCART"
         print(f"   {status} | SQL: {total_rows} -> Mongo: {mongo_count} en {duration:.2f}s")
 
         stats.append({

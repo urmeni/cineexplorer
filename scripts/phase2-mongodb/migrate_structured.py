@@ -19,7 +19,7 @@ def get_movie_batch(skip, limit):
 
 
 def migrate_structured():
-    print(f"🚀 Démarrage de la dénormalisation optimisée (Batch size: {BATCH_SIZE})...")
+    print(f"Démarrage de la dénormalisation optimisée (Batch size: {BATCH_SIZE})...")
     start_global = time.time()
 
     # 1. Nettoyage et préparation

@@ -17,7 +17,7 @@ def get_valid_movie_id():
     sample = db.movies_complete.find_one()
 
     if not sample:
-        print("❌ ERREUR : La collection 'movies_complete' est vide !")
+        print("ERREUR : La collection 'movies_complete' est vide !")
         print("   Avez-vous bien lancé migrate_structured.py ?")
         sys.exit(1)
 
@@ -104,8 +104,8 @@ def run_comparison():
     # Taille Structuré
     size_struct = get_collection_size("movies_complete")
 
-    print(f"💾 Taille Total 'Flat'      : {size_flat:.2f} Mo")
-    print(f"💾 Taille 'Movies Complete' : {size_struct:.2f} Mo")
+    print(f"Taille Total 'Flat'      : {size_flat:.2f} Mo")
+    print(f"Taille 'Movies Complete' : {size_struct:.2f} Mo")
 
     if size_flat > 0:
         augmentation = ((size_struct - size_flat) / size_flat) * 100
